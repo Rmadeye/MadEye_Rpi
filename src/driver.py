@@ -4,9 +4,8 @@ Python driver for raspberry temperature sensor
 """
 import datetime
 import smtplib
-import temp as t
+from src import temp as t, alarm_socket as alarm
 #import flowmeter as f
-import alarm_socket as alarm
 import RPi.GPIO as GPIO
 import time
 GPIO.setmode(GPIO.BCM)
