@@ -2,62 +2,61 @@
 """
 Python driver for raspberry temperature sensor
 """
+
 import datetime
 import smtplib
 from src import temp as t, alarm_socket as alarm
 #import flowmeter as f
 import RPi.GPIO as GPIO
 import time
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(18, GPIO.OUT) # Buzzer online
-GPIO.setup(21, GPIO.OUT) # Socket online
-GPIO.setup(20, GPIO.OUT) # Diode online
-GPIO.output(20,1)
-server = smtplib.SMTP('smtp.p.lodz.pl', 587)
 
-def collect_data():
-    log=open("log.txt","a+")
-    thist=int(t.read_temperature())
-#    outflow=f.collect_flow()
-    time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print(time)
-    log.write(time +" Temperature: "+ str(thist)+"\xb0C"+"\n")
-    log.close()
-    return thist#,outflow
+class Driver:
+    def __init__(self):
+        self.temp_driver = t.TempControl()
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(18, GPIO.OUT) # Buzzer online
+        GPIO.setup(21, GPIO.OUT) # Socket online
+        GPIO.setup(20, GPIO.OUT) # Diode online
+        GPIO.setup(19, GPIO.OUT) # Check temp diode online
+        GPIO.output(20,1)
+        GPIO.output(18,0)
+        time.sleep(0.2)
+        GPIO.output(18,1)
 
-def warnings(temp):#,outflow):
-    if temp <20:
-        print("WARNING! temperature too low!")
-        warlow="WARNING! temperature too low!"
-        server.sendmail("800833@edu.p.lodz.pl","800833@edu.p.lodz.pl",warlow)
-        server.quit()
-        alarm.set_alarm()
-    elif temp >50:
-        print("WARNING! Temperature too high!")
-        warhigh="WARNING! Temperature too high!"
-        server.sendmail("800833@edu.p.lodz.pl","800833@edu.p.lodz.pl",warhigh)
-        server.quit()
-        alarm.set_alarm()
-#    elif outflow ==0:
-#        print("WARNING! Pressure drop!")
-#       pressdrop="WARNING! Pressure drop!"
-        #server.sendmail("800833@edu.p.lodz.pl","800833@edu.p.lodz.pl",pressdrop)
-        #server.quit()
-    else:
-        server.quit()
+
+    def collect_data(self):
+        log=open("log.txt","a+")
+        current_temp = int(self.temp_driver.read_temperature())
+    #    outflow=f.collect_flow()
+        time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        print(time)
+        log.write(time +" Temperature: "+ str(current_temp)+"\xb0C"+"\n")
+        log.close()
+        return self.warnings(current_temp)
+
+    def warnings(self,temp):#,outflow):
+        if temp <30:
+            GPIO.output(19, 1)
+
+        elif temp >35:
+            print("WARNING! Temperature too high!")
+            warhigh="WARNING! Temperature too high!"
+            GPIO.output(18, 0)  # Buzzer on - ALARM LOUD
+            time.sleep(0.5)
+            GPIO.output(18, 1)  # Buzzer on - ALARM LOUD
+            time.sleep(0.5)
+            GPIO.output(18, 0)  # Buzzer on - ALARM LOUD
+            time.sleep(0.5)
+            GPIO.output(18, 1)  # Buzzer on - ALARM LOUD
+            time.sleep(0.5)
+            GPIO.output(18, 0)  # Buzzer on - ALARM LOUD
+            time.sleep(0.5)
+            GPIO.output(18, 1)  # Buzzer on - ALARM LOUD
+
+        elif temp>50:
+            GPIO.output(18, 0)  # Buzzer on - ALARM LOUD
+
+
         
-    
-    
-def main(): 
-    server.starttls()
-    server.login("800833@edu.p.lodz.pl", "password"))
-    collect_data()
-    warnings(t.read_temperature())#,f.collect_flow())           
-    while True:
-        time.sleep(600)
-        main()
-
-main()
-
 
 
