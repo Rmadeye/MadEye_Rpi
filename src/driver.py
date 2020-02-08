@@ -20,7 +20,7 @@ class Driver:
         GPIO.setup(19, GPIO.OUT) # Check temp diode online
         GPIO.output(21,0)
         time.sleep(0.2)
-        GPIO.output(18,1)
+        GPIO.output(21,1)
 
 
     def collect_data(self):
