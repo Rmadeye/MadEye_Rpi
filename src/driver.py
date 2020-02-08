@@ -20,13 +20,16 @@ class Driver:
         GPIO.setup(4, GPIO.OUT) # W1 online
         GPIO.setup(19, GPIO.OUT) # Check temp diode online
         GPIO.output(21,0)
+
         time.sleep(0.2)
         GPIO.output(21,1)
+        GPIO.output(4,1)
+
 
 
     def collect_data(self):
         log=open("log.txt","a+")
-        current_temp = self.temp_driver.check_temperature()
+        current_temp = int(self.temp_driver.check_temperature())
     #    outflow=f.collect_flow()
         time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         print(time)
