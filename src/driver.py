@@ -17,6 +17,7 @@ class Driver:
         GPIO.setmode(GPIO.BCM)
         #GPIO.setup(18, GPIO.OUT) # Diode online
         GPIO.setup(21, GPIO.OUT) # Buzzer online
+        GPIO.setup(4, GPIO.OUT) # W1 online
         GPIO.setup(19, GPIO.OUT) # Check temp diode online
         GPIO.output(21,0)
         time.sleep(0.2)
