@@ -29,7 +29,6 @@ class Driver:
     def collect_data(self):
         log=open("log.txt","a+")
         current_temp = int(self.temp_driver.check_temperature())
-        print(float(current.temp))
         time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         log.write(time +" Temperature: "+ str(current_temp)+"\xb0C"+"\n")
         log.close()

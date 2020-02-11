@@ -11,6 +11,7 @@ class TempControl:
 
         sensor = w1thermsensor.W1ThermSensor()
         temp = sensor.get_temperature()
+        print(round(float(temp)),1)
 
         return temp
 
