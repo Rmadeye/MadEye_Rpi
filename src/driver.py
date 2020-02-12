@@ -38,11 +38,10 @@ class Driver:
         if temp <30:
             GPIO.output(26, 1)
 
-        elif temp>30:
+        if temp>30:
             GPIO.output(26, 0)
 
-
-        elif temp >31:
+        if temp >31:
             print("WARNING! Temperature too high!")
             GPIO.output(21, 0)  # Buzzer on - ALARM LOUD
             time.sleep(0.5)
@@ -56,7 +55,7 @@ class Driver:
             time.sleep(0.5)
             GPIO.output(21, 1)  # Buzzer on - ALARM LOUD
 
-        elif temp>55:
+        if temp>55:
             GPIO.output(21, 0)  # Buzzer on - ALARM LOUD
             time.sleep(5)
             GPIO.output(21, 1)  # Buzzer on - ALARM LOUD
