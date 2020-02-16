@@ -1,5 +1,8 @@
 import w1thermsensor, time, datetime
 import RPi.GPIO as GPIO
+import colorama
+from colorama import Fore, Style
+
 
 
 class TempControl:
@@ -12,7 +15,7 @@ class TempControl:
         sensor = w1thermsensor.W1ThermSensor()
         temp = sensor.get_temperature()
         time=datetime.datetime.now().strftime('%H:%M:%S')
-        print("Current time: {}, \n Current temperature: {}".format(time, round(float(temp), 1)))
+        print("Current time: {}, \nCurrent temperature: {}".format(time, round(float(temp), 1)))
 
         return temp
 

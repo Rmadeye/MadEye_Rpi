@@ -6,10 +6,13 @@ Python driver for raspberry temperature sensor
 from src import temp as t
 import RPi.GPIO as GPIO
 import time
+import colorama
+from colorama import Fore, Style
+
 
 class Driver:
     def __init__(self):
-        print("Initializing")
+        print(Fore.GREEN + "Initializing")
         self.temp_driver = t.TempControl()
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(21, GPIO.OUT) # Buzzer online
