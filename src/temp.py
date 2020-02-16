@@ -12,8 +12,7 @@ class TempControl:
         sensor = w1thermsensor.W1ThermSensor()
         temp = sensor.get_temperature()
         time=datetime.datetime.now().strftime('%H:%M:%S')
-        print(round(float(temp), 1))
-        print("Current time: {}, current temperature: {}".format(time, round(float(temp), 1)))
+        print("Current time: {}, \n Current temperature: {}".format(time, round(float(temp), 1)))
 
         return temp
 
