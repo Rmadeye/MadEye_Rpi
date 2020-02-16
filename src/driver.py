@@ -3,10 +3,7 @@
 Python driver for raspberry temperature sensor
 """
 
-import datetime
-import smtplib
 from src import temp as t
-#import flowmeter as f
 import RPi.GPIO as GPIO
 import time
 
@@ -15,9 +12,7 @@ class Driver:
         print("Initializing")
         self.temp_driver = t.TempControl()
         GPIO.setmode(GPIO.BCM)
-        #GPIO.setup(18, GPIO.OUT) # Diode online
         GPIO.setup(21, GPIO.OUT) # Buzzer online
-        #GPIO.setup(19, GPIO.OUT) # W1 online
         GPIO.setup(26, GPIO.OUT) # Check temp diode online
         GPIO.output(21,0)
 
@@ -27,11 +22,7 @@ class Driver:
 
 
     def collect_data(self):
-        log=open("log.txt","a+")
         current_temp = int(self.temp_driver.check_temperature())
-        time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        log.write(time +" Temperature: "+ str(current_temp)+"\xb0C"+"\n")
-        log.close()
         return self.warnings(current_temp)
 
     def warnings(self,temp):#,outflow):
@@ -55,7 +46,7 @@ class Driver:
             time.sleep(0.5)
             GPIO.output(21, 1)  # Buzzer on - ALARM LOUD
 
-        if temp>55:
+        if temp>45:
             GPIO.output(21, 0)  # Buzzer on - ALARM LOUD
             time.sleep(5)
             GPIO.output(21, 1)  # Buzzer on - ALARM LOUD
