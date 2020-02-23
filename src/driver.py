@@ -23,7 +23,7 @@ class Driver:
         GPIO.output(21,1)
 
 
-
+#27603881
     def collect_data(self):
         current_temp = int(self.temp_driver.check_temperature())
         return self.warnings(current_temp)
@@ -35,7 +35,7 @@ class Driver:
         if temp>30:
             GPIO.output(26, 0)
 
-        if temp >31:
+        if temp >35:
             print("WARNING! Temperature too high!")
             GPIO.output(21, 0)  # Buzzer on - ALARM LOUD
             time.sleep(0.5)
