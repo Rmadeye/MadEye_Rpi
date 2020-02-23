@@ -38,15 +38,15 @@ class Driver:
         if temp >35:
             print("WARNING! Temperature too high!")
             GPIO.output(21, 0)  # Buzzer on - ALARM LOUD
-            time.sleep(0.5)
+            time.sleep(0.25)
             GPIO.output(21, 1)  # Buzzer on - ALARM LOUD
-            time.sleep(0.5)
+            time.sleep(0.25)
             GPIO.output(21, 0)  # Buzzer on - ALARM LOUD
-            time.sleep(0.5)
+            time.sleep(0.25)
             GPIO.output(21, 1)  # Buzzer on - ALARM LOUD
-            time.sleep(0.5)
+            time.sleep(0.25)
             GPIO.output(21, 0)  # Buzzer on - ALARM LOUD
-            time.sleep(0.5)
+            time.sleep(0.25)
             GPIO.output(21, 1)  # Buzzer on - ALARM LOUD
 
         if temp>45:
