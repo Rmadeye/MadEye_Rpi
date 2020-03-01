@@ -26,7 +26,7 @@ class Driver:
 
     def collect_data(self):
         distilled_temp = int(self.temp_driver.check_distill_temp())
-        inner_temp = int(self.temp_driver.check_inner_temp())
+        # inner_temp = int(self.temp_driver.check_inner_temp())
         return self.warnings(distilled_temp)
 
     def warnings(self,temp):#,outflow):
