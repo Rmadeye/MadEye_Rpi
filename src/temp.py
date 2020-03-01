@@ -14,6 +14,7 @@ class TempControl:
         sensor = w1thermsensor.W1ThermSensor()
         temp_distilled = sensor.get_temperature()
 
+
         return float(temp_distilled)
     #
     # def check_inner_temp(self):
