@@ -1,7 +1,6 @@
-import w1thermsensor, time, datetime
+import w1thermsensor
 import RPi.GPIO as GPIO
-import colorama
-from colorama import Fore, Style
+
 
 
 
@@ -10,14 +9,18 @@ class TempControl:
         GPIO.setwarnings(False)
 
 
-    def check_temperature(self):
+    def check_distill_temp(self):
 
         sensor = w1thermsensor.W1ThermSensor()
-        temp = sensor.get_temperature()
-        time=datetime.datetime.now().strftime('%H:%M:%S')
-        print("Current time: {}, \nCurrent temperature: {}".format(time, round(float(temp), 1)))
+        temp_distilled = sensor.get_temperature()
 
-        return temp
+        return temp_distilled
+    #
+    # def check_inner_temp(self):
+    #     sensor = w1thermsensor.W1ThermSensor()
+    #     temp_inner = sensor.get_temperature()
+    #
+    #     return temp_inner
 
 
 
